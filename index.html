@@ -8,7 +8,7 @@
 </head>
 <body>
   <div style="display: none;">
-    <img id="pic_halo" src="img/AS_plate_diff-halo.png" width="2641" height="2637" alt="AltSpace" />
+    <!-- <img id="pic_halo" src="img/AS_plate_diff-halo.png" width="2641" height="2637" alt="AltSpace" /> -->
     <img id="pic1" src="img/AS_plate_diff-01.png" width="1440" height="1440" alt="AltSpace" />
     <img id="pic2" src="img/AS_plate_diff-02.png" width="1440" height="1440" alt="AltSpace" />
     <img id="pic3" src="img/AS_plate_diff-03.png" width="1440" height="1440" alt="AltSpace" />
@@ -29,13 +29,13 @@
           frozen_layers = [ 8 ],
           rasters = [],
           velocities = [],
-          accelerations = [],
-          halo = new Raster( "pic_halo" ),
-          opacity_diff = 0.1,
-          next_opacity = 0.5;
+          accelerations = [];
+          // halo = new Raster( "pic_halo" ),
+          // opacity_diff = 0.1,
+          // next_opacity = 0.5;
       
-      halo.position = view.center;
-      halo.opacity = 0;
+      // halo.position = view.center;
+      // halo.opacity = 0;
       
       for ( var i = 1; i <= pics_count; i++ ) {
         var r = new Raster( "pic" + i );
@@ -49,7 +49,7 @@
       }
       
       function onResize() {
-        halo.position = view.center;
+        // halo.position = view.center;
         for ( var i = 0; i < pics_count; i++ ) {
           rasters[ i ].position = view.center;
         }
@@ -61,21 +61,21 @@
             rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] );
           }
         }
-        var current_opacity = halo.opacity + opacity_diff * event.delta;
-        if ( current_opacity >= 0 && current_opacity <= 1 ) {
-          halo.opacity = current_opacity;
-        } else {
-          nextOpacity();
-        }
-        if ( Math.round( ( halo.opacity - next_opacity ) * 10 ) == 0 ) {
-          nextOpacity();
-        }
+        // var current_opacity = halo.opacity + opacity_diff * event.delta;
+        // if ( current_opacity >= 0 && current_opacity <= 1 ) {
+        //   halo.opacity = current_opacity;
+        // } else {
+        //   nextOpacity();
+        // }
+        // if ( Math.round( ( halo.opacity - next_opacity ) * 10 ) == 0 ) {
+        //   nextOpacity();
+        // }
       }
       
-      function nextOpacity() {
-        next_opacity = Math.random();
-        opacity_diff = ( next_opacity - halo.opacity ) / ( Math.random() * 2 + 1 );
-      }
+      // function nextOpacity() {
+      //   next_opacity = Math.random();
+      //   opacity_diff = ( next_opacity - halo.opacity ) / ( Math.random() * 2 + 1 );
+      // }
       
       window.setInterval( renewAccelerations, 5000 );
       
