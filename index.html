@@ -3,13 +3,68 @@
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title>AltSpace</title>
   <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <script type="text/javascript" charset="utf-8" src="js/rph.js"></script>
-  <script type="text/javascript" charset="utf-8" src="js/layer.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/paper.js"></script>
   <script type="text/javascript" charset="utf-8" src="js/util.js"></script>
-  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 </head>
 <body>
+  <div style="display: none;">
+    <img id="pic1" src="img/AS_plate_diff-01.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic2" src="img/AS_plate_diff-02.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic3" src="img/AS_plate_diff-03.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic4" src="img/AS_plate_diff-04.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic5" src="img/AS_plate_diff-05.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic6" src="img/AS_plate_diff-06.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic7" src="img/AS_plate_diff-07.png" width="1440" height="1440" alt="AltSpace" />
+    <img id="pic8" src="img/AS_plate_diff-08.png" width="1440" height="1440" alt="AltSpace" />
+  </div>
   <div id="page">
+    <script type="text/paperscript" canvas="paper">
+      
+      var width = window.innerWidth,
+          height = window.innerHeight,
+          pics_count = 8,
+          layers = [],
+          paper,
+          frozen_layers = [ 8 ],
+          rasters = [],
+          velocities = [],
+          accelerations = [];
+      
+      for ( var i = 1; i <= pics_count; i++ ) {
+        var r = new Raster( "pic" + i );
+        r.position = view.center;
+        rasters.push( r );
+        var direction = ( Math.random() - 0.5 ) > 0 ? 1 : -1,
+            angle = Math.round( direction * ( 360 * Math.random() + 1 ) ),
+            duration = Math.round( Math.random() * 25 + 1 );
+        velocities.push( angle / duration );
+        accelerations.push( 0 )
+      }
+      
+      function onResize() {
+        for ( var i = 0; i < pics_count; i++ ) {
+          rasters[ i ].position = view.center;
+        }
+      }
+      
+      function onFrame( event ) {
+        for ( var i = 0; i < pics_count; i++ ) {
+          if ( frozen_layers.indexOf( i + 1 ) === -1 ) {
+            rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] );
+          }
+        }
+      }
+      
+      window.setInterval( renewAccelerations, 5000 );
+      
+      function renewAccelerations() {
+        for ( var i = 0; i < pics_count; i++ ) {
+          accelerations[ i ] = ( ( Math.random() - 0.5 ) > 0 ? 1 : -1 ) * Math.random() * 1000;
+        }
+      }
+      
+    </script>
+    <canvas id="paper" resize></canvas>
   </div>
   
   <script type="text/javascript">
