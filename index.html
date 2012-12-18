@@ -64,11 +64,10 @@
         var current_opacity = halo.opacity + opacity_diff * event.delta;
         if ( current_opacity >= 0 && current_opacity <= 1 ) {
           halo.opacity = current_opacity;
+        } else {
+          nextOpacity();
         }
-        if (
-          (halo.opacity < 0) ||
-          (halo.opacity > 1) ||
-          Math.round( ( halo.opacity - next_opacity ) * 100 ) == 0 ) {
+        if ( Math.round( ( halo.opacity - next_opacity ) * 10 ) == 0 ) {
           nextOpacity();
         }
       }
