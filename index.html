@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta name="author" content="4pcbr">
   <title>AltSpace</title>
   <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -32,12 +33,6 @@
           rasters = [],
           velocities = [],
           accelerations = [];
-          // halo = new Raster( "pic_halo" ),
-          // opacity_diff = 0.1,
-          // next_opacity = 0.5;
-      
-      // halo.position = view.center;
-      // halo.opacity = 0;
       
       for ( var i = 1; i <= pics_count; i++ ) {
         var r = new Raster( "pic" + i );
@@ -63,21 +58,7 @@
             rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] );
           }
         }
-        // var current_opacity = halo.opacity + opacity_diff * event.delta;
-        // if ( current_opacity >= 0 && current_opacity <= 1 ) {
-        //   halo.opacity = current_opacity;
-        // } else {
-        //   nextOpacity();
-        // }
-        // if ( Math.round( ( halo.opacity - next_opacity ) * 10 ) == 0 ) {
-        //   nextOpacity();
-        // }
       }
-      
-      // function nextOpacity() {
-      //   next_opacity = Math.random();
-      //   opacity_diff = ( next_opacity - halo.opacity ) / ( Math.random() * 2 + 1 );
-      // }
       
       window.setInterval( renewAccelerations, 5000 );
       
