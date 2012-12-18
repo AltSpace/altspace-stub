@@ -55,7 +55,8 @@
       function onFrame( event ) {
         for ( var i = 0; i < pics_count; i++ ) {
           if ( frozen_layers.indexOf( i + 1 ) === -1 ) {
-            rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] );
+            velocities[ i ] += event.delta * accelerations[ i ];
+            rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] ) / 2;
           }
         }
       }
@@ -64,7 +65,7 @@
       
       function renewAccelerations() {
         for ( var i = 0; i < pics_count; i++ ) {
-          accelerations[ i ] = ( ( Math.random() - 0.5 ) > 0 ? 1 : -1 ) * Math.random() * 1000;
+          accelerations[ i ] = ( ( Math.random() - 0.5 ) > 0 ? 1 : -1 ) * Math.random() * 5;
         }
       }
       
