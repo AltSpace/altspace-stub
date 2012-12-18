@@ -15,7 +15,7 @@ window.addEventListener( "DOMContentLoaded", function() {
             paper: paper,
             x: paper.width / 2,
             y: paper.height / 2,
-            R: 400,
+            R: 300,
             fill: ( i == 0 ) ? "#000" : format( pic_path, i )
           }
         )
