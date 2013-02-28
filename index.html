@@ -9,7 +9,7 @@
   <script type="text/javascript" charset="utf-8" src="js/paper.js"></script>
   <script type="text/javascript" charset="utf-8" src="js/util.js"></script>
 </head>
-<body>
+<body style="overflow: hidden;">
   <div style="display: none;">
     <!-- <img id="pic_halo" src="img/AS_plate_diff-halo.png" width="2641" height="2637" alt="AltSpace" /> -->
     <img id="pic1" src="img/AS_plate_diff-01.png" width="1440" height="1440" alt="AltSpace" />
@@ -32,7 +32,8 @@
           frozen_layers = [ 8 ],
           rasters = [],
           velocities = [],
-          accelerations = [];
+          accelerations = [],
+          MAX_VELOCITY = 10;
       
       for ( var i = 1; i <= pics_count; i++ ) {
         var r = new Raster( "pic" + i );
@@ -55,7 +56,11 @@
       function onFrame( event ) {
         for ( var i = 0; i < pics_count; i++ ) {
           if ( frozen_layers.indexOf( i + 1 ) === -1 ) {
-            velocities[ i ] += event.delta * accelerations[ i ];
+            var v = velocities[ i ] + event.delta * accelerations[ i ];
+            if ( Math.abs( v ) > MAX_VELOCITY ) {
+              v = ( v >= 0 ? 1 : -1 ) * MAX_VELOCITY;
+            }
+            velocities[ i ] = v;
             rasters[ i ].rotate( event.delta * velocities[ i ] + Math.pow( event.delta, 2 ) * accelerations[ i ] ) / 2;
           }
         }
